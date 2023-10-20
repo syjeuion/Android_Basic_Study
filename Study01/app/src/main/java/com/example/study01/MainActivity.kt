@@ -17,15 +17,35 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-            if(result.resultCode == Activity.RESULT_OK){
-//                binding.tvText.text = result.data?.getStringExtra("text")
+        supportFragmentManager.beginTransaction().replace(R.id.fl_main,FirstFragment()).commit()
+
+        binding.bnvGnb.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.Frag1->{
+                    supportFragmentManager.beginTransaction().replace(R.id.fl_main,FirstFragment()).commit()
+                }
+                R.id.Frag2->{
+                    supportFragmentManager.beginTransaction().replace(R.id.fl_main,SecondFragment()).commit()
+                }
+                R.id.Frag3->{
+                    supportFragmentManager.beginTransaction().replace(R.id.fl_main,ThirdFragment()).commit()
+                }
             }
+            true
         }
 
-//        binding.btn.setOnClickListener {
-//            val intent = Intent(this,SubActivity::class.java)
-//            launcher.launch(intent)
-//        }
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if(result.resultCode == Activity.RESULT_OK){
+                val editText = result.data?.getStringExtra("editText").toString()
+                val firstFragment =supportFragmentManager.findFragmentById(R.id.fl_main) as FirstFragment
+                firstFragment.setText(editText)
+            }
+        }
+    }
+
+    fun goSubActivity(text:String){
+        val intent = Intent(this,SubActivity::class.java)
+        intent.putExtra("originalText", text)
+        launcher.launch(intent)
     }
 }
