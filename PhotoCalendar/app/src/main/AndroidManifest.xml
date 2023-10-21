@@ -23,7 +23,7 @@
         </activity>
 
         <provider
-            android:authorities="com.example.ch16_provider.fileprovider"
+            android:authorities="com.example.photocalendar.fileprovider"
             android:name="androidx.core.content.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

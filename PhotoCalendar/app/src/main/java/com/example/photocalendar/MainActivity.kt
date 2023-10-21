@@ -57,39 +57,39 @@ class MainActivity : AppCompatActivity() {
         }
 
         //카메라 요청 런처
-//        var filePath:String
-//        val requestCameraFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-//            //카메라 앱
-//            val calRatio = calculateInSampleSize(
-//                Uri.fromFile(File(filePath)),
-//                resources.getDimensionPixelSize(R.dimen.imgSize),
-//                resources.getDimensionPixelSize(R.dimen.imgSize)
-//            )
-//            val option = BitmapFactory.Options()
-//            option.inSampleSize = calRatio
-//            val bitmap = BitmapFactory.decodeFile(filePath,option)
-//            bitmap?.let{
-//                binding.ivImage.setImageBitmap(bitmap)
-//            }
-//        }
-//        binding.btnOpenCamera.setOnClickListener {
-//            //카메라 앱
-//            //파일 준비
-//            val timeStamp:String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-//            val storageDir:File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-//            val file = File.createTempFile(
-//                "JPEG_${timeStamp}_",
-//                ".jpg",
-//                storageDir
-//            )
-//            filePath = file.absolutePath
-//            val photoURI:Uri = FileProvider.getUriForFile(
-//                this, "com.example.ch16_provider.fileprovider",file
-//            )
-//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//            requestCameraFileLauncher.launch(intent)
-//        }
+        var filePath=""
+        val requestCameraFileLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            //카메라 앱
+            val calRatio = calculateInSampleSize(
+                Uri.fromFile(File(filePath)),
+                resources.getDimensionPixelSize(R.dimen.imgSize),
+                resources.getDimensionPixelSize(R.dimen.imgSize)
+            )
+            val option = BitmapFactory.Options()
+            option.inSampleSize = calRatio
+            val bitmap = BitmapFactory.decodeFile(filePath,option)
+            bitmap?.let{
+                binding.ivImage.setImageBitmap(bitmap)
+            }
+        }
+        binding.btnOpenCamera.setOnClickListener {
+            //카메라 앱
+            //파일 준비
+            val timeStamp:String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val storageDir:File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val file = File.createTempFile(
+                "JPEG_${timeStamp}_",
+                ".jpg",
+                storageDir
+            )
+            filePath = file.absolutePath
+            val photoURI:Uri = FileProvider.getUriForFile(
+                this, "com.example.photocalendar.fileprovider",file
+            )
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            requestCameraFileLauncher.launch(intent)
+        }
 
     }
 
