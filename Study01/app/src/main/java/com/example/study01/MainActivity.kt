@@ -15,10 +15,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     lateinit var launcher: ActivityResultLauncher<Intent>
+
+    lateinit var firstFragment:FirstFragment
+    lateinit var secondFragment:SecondFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        firstFragment = FirstFragment()
+        secondFragment = SecondFragment()
 
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if(result.resultCode == Activity.RESULT_OK){
@@ -36,20 +42,11 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.fl_main,FirstFragment()).commit()
                 }
                 R.id.Frag2->{
-                    val firstFragment =supportFragmentManager.findFragmentById(R.id.fl_main) as FirstFragment
-                    val secondFragment = SecondFragment()
-                    if(firstFragment.isVisible){
-//                      firstFragment.setBundle()
-                        val bundle = Bundle()
-                        val text = firstFragment.getText()
-                        Log.d("TAG", "onCreate: $text")
-                        bundle.putString("textFromFirst",firstFragment.getText())
-//                        firstFragment.setBundle()
-                      secondFragment.arguments= bundle
-                    }
-//                    else{
-//                        SecondFragment()
-//                    }
+//                    val firstFragment = supportFragmentManager.findFragmentById(R.id.fl_main) as FirstFragment
+                    val bundle = Bundle()
+                    bundle.putString("textFromFirst",firstFragment.getText())
+                    secondFragment.arguments= bundle
+
                     supportFragmentManager.beginTransaction().replace(R.id.fl_main,secondFragment).commit()
                 }
                 R.id.Frag3->{
