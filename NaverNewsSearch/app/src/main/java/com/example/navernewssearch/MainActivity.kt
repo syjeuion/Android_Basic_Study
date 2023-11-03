@@ -1,5 +1,6 @@
 package com.example.navernewssearch
 
+import android.content.ClipData.Item
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var retrofitClient: Retrofit
     private lateinit var retrofitService: RetrofitService
+
+    var newsList= listOf<News>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,15 +33,50 @@ class MainActivity : AppCompatActivity() {
 //        retrofitClient = RetrofitClient.getInstance()
 //        retrofitService = retrofitClient.create(RetrofitService::class.java)
 
+        retrofitClient = Retrofit.Builder()
+            .baseUrl("https://openapi.naver.com/v1/search/news.json/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        retrofitService = retrofitClient.create(RetrofitService::class.java)
+
         val TAG = "RETROFIT"
 
-        val newsList = arrayListOf<News>(
-            News("title1","description1","date1"),
-            News("title2","description2","date2"),
-            News("title3","description3","date3")
-        )
-        initializeViews(newsList)
+//        val newsList = arrayListOf<News>(
+//            News("title1","description1","date1"),
+//            News("title2","description2","date2"),
+//            News("title3","description3","date3")
+//        )
+//        initializeViews(newsList)
 
+
+
+        binding.btnLetsSearch.setOnClickListener{
+            val newsItemsCall = retrofitService.getItems()
+
+            newsItemsCall.enqueue(object: Callback<List<News>>{
+                override fun onResponse(call: Call<List<News>>, response: Response<List<News>>) {
+                    if(response.isSuccessful){
+                        //성공
+                        val itemList = response.body()
+                        Log.d(TAG, "onResponse: ${itemList}")
+                        if (itemList != null) {
+                            newsList = itemList
+                        }
+                        initializeViews(newsList)
+                        Log.d(TAG, "Success")
+                    }else{
+                        //실패
+                        Log.d(TAG, "Fail")
+                    }
+                }
+
+                override fun onFailure(call: Call<List<News>>, t: Throwable) {
+                    //통신 실패
+                    Log.d(TAG, "onFailure")
+                    call.cancel()
+                }
+            })
+        }
 //        binding.btnLetsSearch.setOnClickListener {
 //            retrofitService.getItems().enqueue(object : Callback<List<News>>{
 //                override fun onResponse(call: Call<List<News>>, response: Response<List<News>>) {
@@ -57,13 +95,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     //RecyclerView
-    private fun initializeViews(newsList: ArrayList<News>){
+    private fun initializeViews(newsList: List<News>){
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = RecyclerAdapter(newsList)
     }
 
+    //Retrofit
+//    private var instance: Retrofit? = null
 //    object RetrofitClient{
-//        private var instance: Retrofit? = null
 //
 //        private val gson = GsonBuilder().setLenient().create()
 //
