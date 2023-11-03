@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import com.example.photocalendar.databinding.ActivityMainBinding
@@ -19,11 +20,12 @@ import java.util.Date
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        var sendBitmap:Bitmap?=null
         //갤러리 요청 런처
         val requestGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             try{
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 //이미지 로딩
                 var inputStream = contentResolver.openInputStream(it.data!!.data!!)
                 val bitmap = BitmapFactory.decodeStream(inputStream, null, option)
+                if(bitmap!=null){sendBitmap = bitmap}
                 inputStream!!.close()
                 inputStream = null
                 bitmap?.let{
@@ -68,6 +71,7 @@ class MainActivity : AppCompatActivity() {
             val option = BitmapFactory.Options()
             option.inSampleSize = calRatio
             val bitmap = BitmapFactory.decodeFile(filePath,option)
+            if(bitmap!=null){sendBitmap = bitmap}
             bitmap?.let{
                 binding.ivImage.setImageBitmap(bitmap)
             }
@@ -90,7 +94,14 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             requestCameraFileLauncher.launch(intent)
         }
-
+        //Sub Activity로 이동
+//        binding.btnOpenSubActivity.setOnClickListener {
+//            val intent = Intent(this,MainActivity::class.java)
+//            if(sendBitmap!=null){
+//                intent.putExtra("img",sendBitmap)
+//            }
+//            startActivity(intent)
+//        }
     }
 
     private fun calculateInSampleSize(fileUri:Uri, reqWidth:Int, reqHeight:Int):Int{

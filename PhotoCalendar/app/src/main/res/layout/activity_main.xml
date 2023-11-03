@@ -34,9 +34,21 @@
         android:layout_height="wrap_content"
         android:text="Open Camera"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/btn_open_sub_activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_open_gallley"/>
+
+    <Button
+        android:id="@+id/btn_open_sub_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sub Activity"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_open_gallley" />
+        app:layout_constraintTop_toBottomOf="@id/btn_open_camera"
+        android:layout_marginTop="50dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
