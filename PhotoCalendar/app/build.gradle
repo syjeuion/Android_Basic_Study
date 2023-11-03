@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.study01'
+    namespace 'com.example.photocalendar'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.study01"
+        applicationId "com.example.photocalendar"
         minSdk 33
         targetSdk 33
         versionCode 1
@@ -30,7 +30,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     viewBinding{
         enabled = true
     }
