@@ -4,15 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:padding="16dp">
 
-    <TextView
+    <EditText
+        android:id="@+id/et_inputSearchWord"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_LetsSearch"/>
+    <Button
+        android:id="@+id/btn_LetsSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="검색"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/et_inputSearchWord"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/et_inputSearchWord"
+        app:layout_constraintBottom_toTopOf="@id/btn_saveResult"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_news"/>
+    <Button
+        android:id="@+id/btn_saveResult"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="검색 결과 저장하기"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_deleteDB"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <Button
+        android:id="@+id/btn_deleteDB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="데이터베이스 삭제하기"
+        app:layout_constraintStart_toEndOf="@id/btn_saveResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="12dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
