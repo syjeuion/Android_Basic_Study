@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.navernewssearch.databinding.ActivityMainBinding
 import com.example.navernewssearch.retrofit.News
 import com.example.navernewssearch.retrofit.RetrofitService
+import com.example.navernewssearch.retrofit.SearchResult
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 //        retrofitService = retrofitClient.create(RetrofitService::class.java)
 
         retrofitClient = Retrofit.Builder()
-            .baseUrl("https://openapi.naver.com/v1/search/news.json/")
+            .baseUrl("https://openapi.naver.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         retrofitService = retrofitClient.create(RetrofitService::class.java)
@@ -51,16 +52,17 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.btnLetsSearch.setOnClickListener{
-            val newsItemsCall = retrofitService.getItems()
+            var searchWord = binding.etInputSearchWord.text.toString()
+            val newsItemsCall = retrofitService.getSearchNews("fLsbsBXA5kgnhzYqAzGt","bk_GPdBIPz", searchWord)
 
-            newsItemsCall.enqueue(object: Callback<List<News>>{
-                override fun onResponse(call: Call<List<News>>, response: Response<List<News>>) {
+            newsItemsCall.enqueue(object: Callback<SearchResult>{
+                override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
                     if(response.isSuccessful){
                         //성공
                         val itemList = response.body()
                         Log.d(TAG, "onResponse: ${itemList}")
                         if (itemList != null) {
-                            newsList = itemList
+                            newsList = itemList.items
                         }
                         initializeViews(newsList)
                         Log.d(TAG, "Success")
@@ -69,8 +71,7 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG, "Fail")
                     }
                 }
-
-                override fun onFailure(call: Call<List<News>>, t: Throwable) {
+                override fun onFailure(call: Call<SearchResult>, t: Throwable) {
                     //통신 실패
                     Log.d(TAG, "onFailure")
                     call.cancel()

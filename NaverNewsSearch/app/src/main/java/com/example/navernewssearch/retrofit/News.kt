@@ -7,17 +7,21 @@ import java.util.Date
 
 data class News (
     @SerializedName("title")
-    val title: String,
+    var title: String,
 
     @SerializedName("originallink")
-    val originallink: String,
+    var originallink: String,
 
     @SerializedName("link")
-    val link: String,
+    var link: String,
 
     @SerializedName("description")
-    val description: String,
+    var description: String,
 
     @SerializedName("pubDate")
-    val pubDate: Date
+    var pubDate: String
+)
+
+data class SearchResult(
+    var items: List<News>
 )
