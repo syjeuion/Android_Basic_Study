@@ -38,12 +38,14 @@ class MainActivity : AppCompatActivity() {
         retrofitService = retrofitClient.create(RetrofitService::class.java)
 
         val TAG = "RETROFIT"
+        val CLIENT_ID = BuildConfig.NAVER_CLIENT_ID
+        val CLIENT_SECRET = BuildConfig.NAVER_CLIENT_SECRET
 
         binding.btnLetsSearch.setOnClickListener{
             var searchWord = binding.etInputSearchWord.text.toString()
             binding.etInputSearchWord.text = null
 
-            val newsItemsCall = retrofitService.getSearchNews("fLsbsBXA5kgnhzYqAzGt","bk_GPdBIPz", searchWord)
+            val newsItemsCall = retrofitService.getSearchNews(CLIENT_ID,CLIENT_SECRET, searchWord)
 
             newsItemsCall.enqueue(object: Callback<SearchResult>{
                 override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
