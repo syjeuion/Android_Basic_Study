@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    lateinit var launcher: ActivityResultLauncher<Intent>
+//    lateinit var launcher: ActivityResultLauncher<Intent>
 
     private lateinit var retrofitClient: Retrofit
     private lateinit var retrofitService: RetrofitService
@@ -31,9 +31,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        retrofitClient = RetrofitClient.getInstance()
-//        retrofitService = retrofitClient.create(RetrofitService::class.java)
-
         retrofitClient = Retrofit.Builder()
             .baseUrl("https://openapi.naver.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -42,17 +39,10 @@ class MainActivity : AppCompatActivity() {
 
         val TAG = "RETROFIT"
 
-//        val newsList = arrayListOf<News>(
-//            News("title1","description1","date1"),
-//            News("title2","description2","date2"),
-//            News("title3","description3","date3")
-//        )
-//        initializeViews(newsList)
-
-
-
         binding.btnLetsSearch.setOnClickListener{
             var searchWord = binding.etInputSearchWord.text.toString()
+            binding.etInputSearchWord.text = null
+
             val newsItemsCall = retrofitService.getSearchNews("fLsbsBXA5kgnhzYqAzGt","bk_GPdBIPz", searchWord)
 
             newsItemsCall.enqueue(object: Callback<SearchResult>{
@@ -78,21 +68,6 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
-//        binding.btnLetsSearch.setOnClickListener {
-//            retrofitService.getItems().enqueue(object : Callback<List<News>>{
-//                override fun onResponse(call: Call<List<News>>, response: Response<List<News>>) {
-//                    Log.d(TAG, "onResponse: ${response.body()}")
-//                    val res = response.body()
-//                    binding.etInputSearchWord.text = null
-//
-//                    if(res!=null){
-//                        for(data in response.body()!!){
-//
-//                        }
-//                    }
-//                }
-//            })
-//        }
     }
 
     //RecyclerView
@@ -101,20 +76,4 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = RecyclerAdapter(newsList)
     }
 
-    //Retrofit
-//    private var instance: Retrofit? = null
-//    object RetrofitClient{
-//
-//        private val gson = GsonBuilder().setLenient().create()
-//
-//        fun getInstance(): Retrofit{
-//            if(instance == null){
-//                instance = Retrofit.Builder()
-//                    .baseUrl("https://openapi.naver.com/v1/search/news.json")
-//                    .addConverterFactory(GsonConverterFactory.create(gson))
-//                    .build()
-//            }
-//            return instance!!
-//        }
-//    }
 }

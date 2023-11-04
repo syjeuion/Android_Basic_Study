@@ -30,7 +30,7 @@ class RecyclerAdapter(val itemList: List<News>):RecyclerView.Adapter<RecyclerAda
         fun bind(news:News){
             binding.tvTitle.text = news.title
             binding.tvDescription.text = news.description
-            binding.tvDate.text = news.pubDate.toString()
+            binding.tvDate.text = news.pubDate
         }
     }
 }

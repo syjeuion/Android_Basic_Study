@@ -7,10 +7,6 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface RetrofitService {
-//    @Headers({
-//        "X-Naver-Client-Id: iCygq2YmF5YBPsZUO6sA",
-//        "X-Naver-Client-Secret: i23SX54wGs"
-//    })
     @GET("v1/search/news.json")
     fun getSearchNews(
         @Header("X-Naver-Client-Id") ClientId:String,
@@ -18,6 +14,4 @@ interface RetrofitService {
         @Query("query") query:String
     ): Call<SearchResult>
 
-
-//    fun getItems(): Call<List<News>>
 }
