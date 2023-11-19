@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rounded">
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="58dp"
+        android:layout_height="36dp"
+        android:background="@drawable/baseline_remove_24"
+        android:layout_gravity="top|center"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="COMENT"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:layout_gravity="center"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
