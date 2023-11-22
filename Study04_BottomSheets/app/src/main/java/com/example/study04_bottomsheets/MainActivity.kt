@@ -2,6 +2,7 @@ package com.example.study04_bottomsheets
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import com.example.study04_bottomsheets.databinding.ActivityMainBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -12,10 +13,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Expanding BottomSheet
+//        //Expanding BottomSheet
         BottomSheetBehavior.from(binding.coordinator).apply {
-//            maxHeight = 700
+//            maxHeight = findViewById<TextView>(R.id.tv_bottom_sheet).height
             peekHeight = 200
+//            peekHeight = findViewById<TextView>(R.id.tv_bottom_sheet).height
             this.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
